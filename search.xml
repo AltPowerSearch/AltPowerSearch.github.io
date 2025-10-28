@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>AltPower</ShortName>
+  <LongName>Alt-Power Search Engine</LongName>
+  <Description>Alternative Google-based power-user search engine</Description>
+  <Url rel="self" type="application/opensearchdescription+xml" template="https://altpowersearch.github.io/search.xml"/>
+  <Url rel="results" type="text/html" template="https://altpowersearch.github.io/?q={searchTerms}#gsc.q={searchTerms}&amp;gsc.page={startPage?}"/>
+  <Url rel="suggestions" type="application/x-suggestions+json" template="https://clients1.google.com/complete/search?client=firefox&amp;authuser=0&amp;q={searchTerms}"/>
+  <Url rel="suggestions" type="application/x-suggestions+json" template="https://www.google.com/complete/search?client=firefox&amp;authuser=0&amp;q={searchTerms}"/>
+  <Query role="example" searchTerms="funny cats"/>
+  <Image type="image/png">https://altpowersearch.github.io/logo-square.png</Image>
+  <Image type="image/svg+xml">https://altpowersearch.github.io/logo.svg</Image>
+  <Attribution>Copyright 2025, AltPowerSearch. All Rights Reserved.</Attribution>
+</OpenSearchDescription>

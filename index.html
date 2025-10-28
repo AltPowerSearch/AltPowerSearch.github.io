@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en" vocab="https://schema.org/" typeof="WebApplication" prefix="og: https://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <title property="name">Alt-Power – Alternative Google-based power-search engine</title>
+    <meta name="description" content="Alternative Google-powered internet search engine with support for advanced search operators in a clunky old-school interface, preferred by power users. 💪">
+    <script async src="https://cse.google.com/cse.js?cx=678377fcbde92019b"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DSFRN8VMG"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('set','url_passthrough',true);gtag('js',new Date());gtag('config','G-0DSFRN8VMG');</script>
+    <link rel="dns-prefetch preconnect" href="https://www.google.com">
+    <link rel="preload" fetchpriority="high" as="image" href="logo.svg" type="image/svg+xml">
+
+    <link rel="search" type="application/opensearchdescription+xml" title="Alt-Power Search" href="./search.xml">
+    <link rel="canonical home url" href="https://altpowersearch.github.io">
+    <link rel="og:image" href="logo-square.png">
+    <link rel="icon" href="logo-square.png">
+    <meta name="theme-color" content="#eef">
+
+    <meta property="applicationCategory" content="BrowserApplication">
+    <meta property="applicationCategory" content="UtilitiesApplication">
+    <meta property="applicationCategory" content="LifestyleApplication">
+    <meta property="applicationSubCategory" content="Search">
+    <meta property="applicationSubCategory" content="SearchApplication">
+    <meta property="operatingSystem" content="Firefox">
+    <meta property="operatingSystem" content="Chrome">
+    <meta property="operatingSystem" content="Edge">
+    <meta property="operatingSystem" content="Any">
+    <meta property="operatingSystem" content="Cross-platform">
+    <meta property="isAccessibleForFree" content="true">
+    <meta property="featureList" content="internet search, advanced power search">
+    <link rel="license" href="https://www.gnu.org/licenses/agpl-3.0.txt">
+    <link rel="isSimilarTo" href="https://www.google.com">
+    <link rel="isSimilarTo" href="https://www.bing.com">
+    <link rel="isSimilarTo" href="https://publicwww.com">
+
+    <link property="aggregateRating" resource="#review" typeof="AggregateRating">
+    <meta about="#review" content="1" property="ratingCount reviewCount">
+    <meta about="#review" content="4.9" property="ratingValue">
+    <link property="offers" typeof="Offer" resource="#offer">
+    <meta about="#offer" property="price" content="0">
+    <meta about="#offer" property="priceCurrency" content="USD">
+
+    <style>
+        body {background: white;}
+        .flex-break {display: none; flex-basis:0; height:0; margin:0; padding:0;}
+
+        .search-row {
+            max-width: 70ch;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 1.7rem;
+        }
+        .search-row > *:nth-child(3) {flex: 1}
+
+        body.fullscreen {
+            & .search-row {max-width: 90ch !important;}
+            & .search-row > a img {height: min(30vh,30vw) !important; margin-top:3rem;}
+            & .flex-break {display: block !important; flex-basis: 100% !important; }
+        }
+
+        details {
+            &[open] {background: #ffe !important;}
+            & :where(samp, kbd) {white-space: nowrap; background: #eee; border: 1px solid darkgray; border-radius: 5px; padding: 1px 4px;}
+            & article {
+                & :where(p, td) {line-height: 1.8em;}
+                & a {color:#15c}
+                & a:hover {color:#37e}
+                & a:visited {color:#329}
+                & a:active {color:#400}
+            }
+            & h1 {border-bottom: 1px solid #999}
+            & h2 {margin-top: 3rem;}
+            & table {
+                border-spacing: .5rem .5rem;
+                & caption {caption-side: bottom; font-size: small; margin: 1rem .5rem 0 .5rem; text-align: left; }
+                & tr td:nth-child(2) a { text-decoration: none; }
+                & thead tr th { padding: .5rem 0; }
+                & tbody tr th:not([colspan]) { text-align: left; border-bottom: 2px solid gray }
+            }
+        }
+        body:has(details[open]) .search-results {filter: blur(.5rem);}
+    </style>
+    <style>
+        details {
+            position: relative;
+            z-index: 0;
+            max-width: 100ch;
+            margin: auto;
+
+            & > summary {display: inline-block; cursor: pointer; font-size: 2rem; user-select: none;}
+            & > summary::marker { content: '' }  & > summary::-webkit-details-marker { display: none }
+
+            &[open] {
+                position: fixed;
+                inset: 1em;
+                background: white;
+                border: 1px solid grey;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+                padding: 1.5em;
+                overflow: auto;
+                z-index: 9999;
+
+                & > summary {
+                    position: absolute;
+                    top: .5rem;
+                    right: .5rem;
+                    padding: .25rem .5rem;
+                    font-size: 1.3rem;
+                    line-height: 1;
+                    /* advisable focus style */ &:focus {outline: 2px solid Highlight}
+                    & > *,
+                    & > img { display: none }
+                    &::after {content: "×"; border: 1px solid #333; border-radius: 20%; font-size: 2em; height: 1em; width: 1em; display: inline-grid;place-items: center;}
+                    &:hover::after {border: 1px solid black; background: #fdd;}
+                }
+            }
+        }
+    </style>
+    <style>
+        .gcsc-find-more-on-google,
+        a:has(.gcsc-find-more-on-google),
+        .gcsc-more-maybe-branding-root {display: none !important;}
+        input.gsc-input {background: white !important;}
+        @media (max-width: 700px) {
+            .gsc-control-cse {padding: 1em 0 !important;}
+        }
+    </style>
+</head>
+<body>
+<nav class="search-row">
+    <a rel="external logo" href="https://www.google.com/?q=Alt-Power+Search+Engine"
+       onclick="gtag('event', 'nav_home_click')">
+        <img alt="Alt-Power Search Engine" src="logo.svg" style="height: 2.5rem" fetchpriority="high"></a>
+    <div class="flex-break"></div>
+    <!-- https://developers.google.com/custom-search/docs/element#supported_attributes -->
+    <search>
+    <div class="gcse-searchbox-only" data-gname="altpowersearch"
+         data-resultsUrl="./" data-queryParameterName="q" data-newWindow="false"
+         data-enableHistory="true" data-enableAutoComplete="true" data-elementBranding="false"
+         data-autoCompleteMaxCompletions="15" data-autoCompleteMaxPromotions="2"
+         data-enableSpeech="true" data-mobileLayout="enabled" data-ivt="true"
+    ></div></search>
+    <details>
+        <summary onclick="gtag('event', 'nav_info_click')">
+            <img alt="About power search (advanced search) features" src="info.svg" style="height: 1.8rem;"></summary>
+        <article>
+            <h1>
+                <img src="logo.svg" style="height: 4em" alt="Alt power! Expressed as keyboard key Alt and a round (powerful) biceps emoji / icon."><br>
+                Alt-Power Search</h1>
+            <p>
+                Your Google results got quite worse recently?
+                Trying to escape Big Tech and <b>get back your time?</b>
+                Value your privacy? Do you value your time?
+                Longing to <b>switch to how Google was years ago?</b>
+            </p>
+            <p><cite><a href="./?q=alt(ernative)+power+search+engine"><b>Alt</b>(<b>ernative</b>), <b>Power Search</b> engine</a></cite>
+                is an internet search engine, committed to bringing you the best search experience.
+                Alternative and akin to Google, which it's based on, just somewhat better—the interface
+                is slightly clunkier and more verbose.
+                We hope you like it!
+            </p>
+
+            <h2>Alt-Power Search Power-Search Features</h2>
+            <p>Alt-Power Search follows a similar advanced search operator syntax as Google, namely:</p>
+
+            <table>
+                <caption><b>Table 1: Advanced power-search operators supported on <cite>Alt-Power Search</cite></b>
+                    (most are also supported by Google).
+                    Placeholder <kbd>{query}</kbd> stands for the user's full search query,
+                    and other placeholders are reasonably named.
+                    Use these power searching query modifiers and techniques to improve the
+                    quality of your results.</caption>
+                <thead class="thead"><tr><th colspan="3">Most useful search operators</th></tr></thead>
+                <tbody>
+                <tr><th>Search query format</th>
+                    <th>Examples</th>
+                    <th>Explanation</th></tr>
+                <tr><td><kbd>"{query}"</kbd></td>
+                    <td><a href='./?q=%22rat+terrier%22'><samp>"rat terrier"</samp></a></td>
+                    <td>Exact match, word order and character spacing and all.</td></tr>
+                <tr><td><kbd>-{query}</kbd></td>
+                    <td><a href='./?q=Steve+-Jobs'><samp>Steve -Jobs</samp></a></td>
+                    <td>Minus sign (<kbd>-</kbd>) just before any negative words (irrelevant for the query).</td></tr>
+                <tr><td><kbd>{query1} OR {query2}</kbd></td>
+                    <td><a href='./?q=(Wordpress+OR+Joomla)+guide'><samp>(Wordpress OR Joomla) guide</samp></a></td>
+                    <td>Use <kbd>OR</kbd> to find any of several options. Surround with parentheses if using other keywords.</td></tr>
+                <tr><td><kbd>ext:{file_extension}</kbd></td>
+                    <td><a href='./?q=ext:pdf+boletus'><samp>ext:pdf boletus</samp></a></td>
+                    <td>Search only among file types / files with extension.</td></tr>
+                <tr><td><kbd>site:{domain}</kbd></td>
+                    <td><a href='./?q=site:gov+memes'><samp>site:gov memes</samp></a><br>
+                        <a href='./?q=site:cz.wikipedia.org'><samp>site:cz.wikipedia.org</samp></a></td>
+                    <td>Limit search results to a specific website or domain.</td></tr>
+                <tr class="thead"><th colspan="3">Additional / convenience operators</th></tr>
+                <tr><td><kbd>{from}..{to}</kbd></td>
+                    <td><a href='./?q=10..35+kg'><samp>10..35 kg</samp></a><br>
+                        <a href='./?q=$10..$120'><samp>$10..$120</samp></a><br>
+                        <a href='./?q=2010..2011'><samp>2010..2011</samp></a></td>
+                    <td>To define the search range, put two full stops (<kbd>..</kbd>) between the low and high numbers,
+                        trailing with an optional unit of measurement.
+                        This can be used for product prices and publication dates.</td></tr>
+                <tr><td><kbd>after:{date}</kbd></td>
+                    <td><a href='./?q=after:2001-09-11'><samp>after:2001-09-11</samp></a></td>
+                    <td>Show results discovered after the specified date (in ISO 8601 date format: YYYY-MM-DD).</td></tr>
+                <tr><td><kbd>before:{date}</kbd></td>
+                    <td><a href='./?q=before:2020-03-12'><samp>before:2020-03-12</samp></a></td>
+                    <td>Show results discovered before the specified date (in ISO 8601 date format).</td></tr>
+                <tr><td><kbd>intitle:{keyword}</kbd><br>
+                        <kbd>allintitle:{query}</kbd></td>
+                    <td><a href='./?q=allintitle:Index+of'><samp>allintitle:Index of</samp></a></td>
+                    <td>Show only results where the keyword (or the whole query) is contained in HTML <kbd>&lt;title&gt;</kbd> text.</td></tr>
+                <tr><td><kbd>intext:{keyword}</kbd><br>
+                        <kbd>allintext:{query}</kbd></td>
+                    <td><a href='./?q=ext:java+intext:executeUpdate'><samp>ext:java intext:executeUpdate</samp></a></td>
+                    <td>Show only results where the keyword (or the whole query) appears in the page main article text.</td></tr>
+                <tr><td><kbd>inurl:{keyword}</kbd><br>
+                        <kbd>allinurl:{query}</kbd></td>
+                    <td><a href='./?q=inurl:%22cgi-bin/koha%22'><samp>inurl:"cgi-bin/koha"</samp></a></td>
+                    <td>Show only results where the keyword (or the whole query) appars in the page URL.</td></tr>
+                <tr><td><kbd>imagesize:{width}x{height}</kbd></td>
+                    <td><a href='./?q=pussy+imagesize%3A1920x1080#gsc.tab=1&gsc.q=pussy%20imagesize%3A1920x1080'><samp>pussy imagesize:1920x1080</samp></a></td>
+                    <td>Filter images by exact size when in <em>Images</em> tab.</td></tr>
+                <tr><td><kbd>location:{location}</kbd></td>
+                    <td><a href='./?q=sweet+home+location:Alabama'><samp>sweet home location:Alabama</samp></a></td>
+                    <td>Show results tailored to a country or location.</td></tr>
+                <tr><td><kbd>weather:{location}</kbd></td>
+                    <td><a href='./?q=weather:Cairo'><samp>weather:Cairo</samp></a></td>
+                    <td>Pages reporting weather at location.</td></tr>
+                <tr><td><kbd>stocks:{ticker}</kbd></td>
+                    <td><a href='./?q=stocks:GOOG'><samp>stocks:GOOG</samp></a></td>
+                    <td>Results related to a specific stock/futures/forex/crypto market ticker.</td></tr>
+<!--                <tr><td>define:{query}</td><td></td><td></td></tr>-->
+<!--                <tr><td>map:{location}</td><td></td><td></td></tr>-->
+<!--                <tr><td>{unit1} in {unit2}, {unit1} to {unit2}</td><td></td><td></td></tr>-->
+                </tbody>
+            </table>
+
+            <h2>Programatic Search Access</h2>
+            <p>
+                Alt-Power Search can be configured to return search results proactively (at initiation),
+                by setting the <code>?q=</code> search
+                <a rel="external" href="https://en.wikipedia.org/wiki/Query_string">query parameter</a> when constructing the URL.
+                You can <b><a rel="external" href="https://support.mozilla.org/en-US/kb/add-or-remove-search-engine-firefox">add this search engine</a>
+                to your web browser</b>, such as <a rel="external" href="https://getfirefox.com">Firefox</a>
+                (simply right-click on the location bar) or
+                <a rel="external" href="https://support.google.com/chrome/answer/95426?#zippy=%2Curl-with-s-in-place-of-query-field">Google Chrome</a>
+                (and thus Microsoft Edge, Brave, Opera & Vivaldi),
+                by setting the search URL field to
+                <kbd onclick="select(this)">/?q=%s</kbd>
+                <script>
+                    const qstr = document.currentScript.previousElementSibling; qstr.innerHTML = location.origin + qstr.innerHTML;
+                    function select(el) {
+                        const r = document.createRange(); r.selectNodeContents(el);
+                        const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+                    }
+                </script>.
+            </p>
+
+            <h2>Terms of Use & Privacy Policy</h2>
+            <p>
+                Hereby using this website, you agree to abide by
+                <a rel="external privacy-policy terms-of-service" href="https://www.google.com/policies/privacy/partners/">Google's Privacy & Terms</a>.
+                <b>This website itself does not collect or process any personal data from visitors</b>,
+                but third parties including Google may be placing and reading cookies on your browser.
+            </p>
+
+            <h2>Feedback & Contacts</h2>
+            <p>
+                If you think a certain search facet (e.g. Books) is missing a good and reliable source
+                (e.g. not showing results from <cite style="white-space: nowrap">BarnesAndNoble.com</cite>),
+                or with any other bugs or feedback to report,
+                feel free to <a href="https://forms.gle/sFqeNir6GtS1UruY9">write us here</a>.
+            </p>
+            <small style="display:block; margin-top:2em">©2023 <span style="position:absolute; right:1em; color: white">卐</span></small>
+            <script>document.currentScript.previousElementSibling.innerHTML += location.host</script>
+        </article>
+        <script>document.querySelectorAll('a[rel="external"]').forEach(el => el.target = '_blank')</script>
+    </details>
+</nav>
+<main class="search-results">
+    <div class="gcse-searchresults-only"
+         data-autoSearchOnLoad="true" data-queryParameterName="q"
+         data-enableOrderBy="true" data-sort_by="relevance"
+         data-mobileLayout="enabled"
+         data-linkTarget="_blank"
+         data-elementBranding="false"
+         data-resultSetSize="filtered_cse"
+         data-webSearchResultSetSize="filtered_cse"
+         data-webSearchSafesearch="false"
+         data-enableImageSearch="true"
+         data-imageSearchResultSetSize="filtered_cse"
+         data-imageSearchLayout="classic"
+    ></div>
+</main>
+<script>if (!(new URLSearchParams(location.search).has('q'))) document.body.classList.add('fullscreen')</script>
+<script>document.querySelectorAll('img').forEach(el => { el.title ||= el.alt });</script>
+<script>
+const q = decodeURIComponent(
+    /(?<=\bgsc\.q=)[^&]+/.exec(location.hash)?.join() ||
+    new URLSearchParams(location.search).get('q') || '');
+if (q) (function _q () {
+  const el = window.google?.search?.cse?.element?.getElement('altpowersearch');
+  if (el) el.prefillQuery(q);
+  else setTimeout(_q, 10);
+})();
+(function _p () {
+    const el = document.querySelector('input.gsc-input');
+    if (el) { el.placeholder = 'Search query ...'; el.focus(); }
+    else setTimeout(_p, 10);
+})();
+</script>
+<script>
+document.addEventListener('click', ev => {
+    const info = document.querySelector('details');
+    if (info.open && !info.contains(ev.target))
+        info.open = false;
+});
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape')
+        document.querySelector('details[open]').open = false;
+});
+</script>
+</body>
+</html>
