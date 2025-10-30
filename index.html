@@ -331,9 +331,10 @@ const q = decodeURIComponent(
     /(?<=\bgsc\.q=)[^&]+/.exec(location.hash)?.join() ||
     new URLSearchParams(location.search).get('q') || '');
 if (q) (function _q () {
-  const el = window.google?.search?.cse?.element?.getElement('altpowersearch');
-  if (el) el.prefillQuery(q);
-  else setTimeout(_q, 10);
+    top.document.title = `'${q}' @ Alt-Power Search`
+    const el = window.google?.search?.cse?.element?.getElement('altpowersearch');
+    if (el) el.prefillQuery(q);
+    else setTimeout(_q, 10);
 })();
 (function _p () {
     const el = document.querySelector('input.gsc-input');
