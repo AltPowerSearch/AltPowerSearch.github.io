@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <title property="name">Alt-Power – Alternative Google-based power-search engine</title>
     <meta name="description" content="Alternative Google-powered internet search engine with support for advanced search operators in a clunky old-school interface, preferred by power users. 💪">
-    <script async src="https://cse.google.com/cse.js?cx=678377fcbde92019b"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DSFRN8VMG"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('set','url_passthrough',true);gtag('js',new Date());gtag('config','G-0DSFRN8VMG');</script>
     <link rel="dns-prefetch preconnect" href="https://www.google.com">
@@ -297,6 +296,19 @@
     ></div>
 </main>
 <script>if (!(new URLSearchParams(location.search).has('q'))) document.body.classList.add('fullscreen')</script>
+<script>
+const gsc_ref = /&gsc\.ref=[^&]*/.exec(location.hash)?.[0];
+if (gsc_ref) {
+    location.hash = location.hash.replace(gsc_ref, '');
+    let cb_done = false;
+    window.__gcse || (window.__gcse = {});
+    window.__gcse.searchCallbacks = {
+        web: { rendered: (gname, query, promoElts, resultElts) => { if (!cb_done++) location.hash = location.hash + gsc_ref; },},
+        image: {},
+    };
+}
+</script>
+<script async src="https://cse.google.com/cse.js?cx=678377fcbde92019b"></script>
 <script>document.querySelectorAll('img').forEach(el => { el.title ||= el.alt });</script>
 <script>
 const q = decodeURIComponent(
