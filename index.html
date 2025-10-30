@@ -45,18 +45,21 @@
         .flex-break {display: none; flex-basis:0; height:0; margin:0; padding:0;}
 
         .search-row {
-            max-width: 70ch;
-            margin: auto;
+            max-width: 80ch;
+            margin: 1em 1em -1em 2em;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: center;
             gap: 1.7rem;
         }
+        @media (max-width: 700px) {
+            .search-row { margin-left: 1em; }
+        }
         .search-row > *:nth-child(3) {flex: 1}
 
         body.fullscreen {
-            & .search-row {max-width: 90ch !important;}
+            & .search-row {max-width: 90ch !important; margin: auto;}
             & .search-row > a img {height: min(30vh,30vw) !important; margin-top:3rem;}
             & .flex-break {display: block !important; flex-basis: 100% !important; }
         }
@@ -81,7 +84,10 @@
                 & tbody tr th:not([colspan]) { text-align: left; border-bottom: 2px solid gray }
             }
         }
-        body:has(details[open]) .search-results {filter: blur(.5rem);}
+        body:has(details[open]) {
+            overflow: hidden;
+            & :where(.search-results, .search-row > a:first-child, .search-row search) {filter: blur(.5rem);}
+        }
     </style>
     <style>
         details {
