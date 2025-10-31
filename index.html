@@ -8,7 +8,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DSFRN8VMG"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('set','url_passthrough',true);gtag('js',new Date());gtag('config','G-0DSFRN8VMG');</script>
     <link rel="dns-prefetch preconnect" href="https://www.google.com">
-    <link rel="preload" fetchpriority="high" as="image" href="logo.svg" type="image/svg+xml">
+    <link rel="logo preload" fetchpriority="high" as="image" href="logo.svg" type="image/svg+xml">
 
     <link rel="search" type="application/opensearchdescription+xml" title="Alt-Power Search" href="./search.xml">
     <link rel="canonical home url" href="https://altpowersearch.github.io">
@@ -138,18 +138,21 @@
 </head>
 <body>
 <nav class="search-row">
-    <a rel="external logo" href="https://www.google.com/?q=Alt-Power+Search+Engine"
+    <a rel="external" href="https://www.google.com/?q=Alt-Power+Search+Engine"
        onclick="gtag('event', 'nav_home_click')">
         <img alt="Alt-Power Search Engine" src="logo.svg" style="height: 2.5rem" fetchpriority="high"></a>
     <div class="flex-break"></div>
     <!-- https://developers.google.com/custom-search/docs/element#supported_attributes -->
-    <search>
-    <div class="gcse-searchbox-only" data-gname="altpowersearch"
-         data-resultsUrl="./" data-queryParameterName="q" data-newWindow="false"
-         data-enableHistory="true" data-enableAutoComplete="true" data-elementBranding="false"
-         data-autoCompleteMaxCompletions="15" data-autoCompleteMaxPromotions="2"
-         data-enableSpeech="true" data-mobileLayout="enabled" data-ivt="true"
-    ></div></search>
+    <search property="potentialAction" typeof="SearchAction">
+        <meta property="target" content="./?q={search}"/>
+        <meta property="query-input" content="required name=search"/>
+        <div class="gcse-searchbox-only" data-gname="altpowersearch"
+             data-resultsUrl="./" data-queryParameterName="q" data-newWindow="false"
+             data-enableHistory="true" data-enableAutoComplete="true" data-elementBranding="false"
+             data-autoCompleteMaxCompletions="15" data-autoCompleteMaxPromotions="2"
+             data-enableSpeech="true" data-mobileLayout="enabled" data-ivt="true"
+        ></div>
+    </search>
     <details>
         <summary onclick="gtag('event', 'nav_info_click')">
             <img alt="About power search (advanced search) features" src="info.svg" style="height: 1.8rem;"></summary>
@@ -339,7 +342,7 @@ if (q) (function _q () {
 })();
 (function _p () {
     const el = document.querySelector('input.gsc-input');
-    if (el) { el.placeholder = 'Search query ...'; el.focus(); }
+    if (el) { el.placeholder = 'Search query ...'; el.setAttribute('property', 'query'); el.focus(); }
     else setTimeout(_p, 10);
 })();
 </script>
