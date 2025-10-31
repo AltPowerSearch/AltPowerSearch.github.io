@@ -317,15 +317,23 @@
 </main>
 <script>if (!(new URLSearchParams(location.search).has('q'))) document.body.classList.add('fullscreen')</script>
 <script>
+window.__gcse ||= {searchCallbacks: {web: {}, image: {}}};
+window.__gcse.searchCallbacks.web.starting = (gname, query) => {
+    const active_tab = document.querySelector('[class*="refine"] [class*="refinementhActive"]');
+    switch (active_tab?.innerText) {
+        case "Maps": history.back(); location.assign(`https://www.google.com/maps/search/${query}?client=partner-web&amp;gs_ri=partner-web&amp;cx=678377fcbde92019b&amp;partnerid=678377fcbde92019b`); break;
+        case "Google": history.back(); location.assign(`https://www.google.com/search?q=${query}&amp;client=partner-web&amp;gs_ri=partner-web&amp;cx=678377fcbde92019b&amp;partnerid=678377fcbde92019b`); break;
+        case null: console.error('App Outdated Error: No active refinement tab found!');
+    }
+    return '';
+};
 const gsc_ref = /&gsc\.ref=[^&]*/.exec(location.hash)?.[0];
 if (gsc_ref) {
     location.hash = location.hash.replace(gsc_ref, '');
     let cb_done = false;
-    window.__gcse || (window.__gcse = {});
-    window.__gcse.searchCallbacks = {
-        web: { rendered: (gname, query, promoElts, resultElts) => { if (!cb_done++) location.hash = location.hash + gsc_ref; },},
-        image: {},
-    };
+    window.__gcse.searchCallbacks.web.rendered = (gname, query, promoElts, resultElts) => {
+        if (!cb_done++) location.hash = location.hash + gsc_ref;
+    }
 }
 </script>
 <script async src="https://cse.google.com/cse.js?cx=678377fcbde92019b"></script>
