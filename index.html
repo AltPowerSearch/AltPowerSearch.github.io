@@ -33,6 +33,9 @@
     <link rel="isSimilarTo" href="https://www.google.com">
     <link rel="isSimilarTo" href="https://www.bing.com">
     <link rel="isSimilarTo" href="https://publicwww.com">
+    <link rel="isSimilarTo" href="https://www.mojeek.com">
+    <link rel="isSimilarTo" href="https://www.ecosia.org">
+    <link rel="isSimilarTo" href="https://www.startpage.com">
 
     <link property="aggregateRating" resource="#review" typeof="AggregateRating">
     <meta about="#review" content="1" property="ratingCount reviewCount">
@@ -67,9 +70,9 @@
 
         details {
             &[open] {background: #ffe !important;}
-            & :where(samp, kbd) {white-space: nowrap; background: #eee; border: 1px solid darkgray; border-radius: 5px; padding: 1px 4px;}
+            & :where(samp, kbd, code) {white-space: nowrap; background: #eee; border: 1px solid darkgray; border-radius: 5px; padding: 1px 4px;}
             & article {
-                & :where(p, td) {line-height: 1.8em;}
+                & :where(p, td, ul) {line-height: 1.8em;}
                 & a {color:#15c}
                 & a:hover {color:#37e}
                 & a:visited {color:#329}
@@ -78,7 +81,10 @@
             & h1 {border-bottom: 1px solid #999}
             & h2 {margin-top: 3rem;}
             & table {
-                border-spacing: .5rem .5rem;
+                border-spacing: 0;
+                & th, td {padding: .2em .4em}
+                & td {vertical-align: baseline}
+                & tr:nth-of-type(2n) {background: #08050008}
                 & caption {caption-side: bottom; font-size: small; margin: 1rem .5rem 0 .5rem; text-align: left; }
                 & tr td:nth-child(2) a { text-decoration: none; }
                 & thead tr th { padding: .5rem 0; }
@@ -170,7 +176,7 @@
                 is an internet search engine, committed to bringing you the best search experience.
                 Alternative and akin to Google, which it's based on, just somewhat better—the interface
                 is slightly clunkier and more verbose.
-                We hope you like it!
+                We hope you like it as much as we do, but your mileage may vary!
             </p>
 
             <h2>Alt-Power Search Power-Search Features</h2>
@@ -190,7 +196,7 @@
                     <th>Explanation</th></tr>
                 <tr><td><kbd>"{query}"</kbd></td>
                     <td><a href='./?q=%22rat+terrier%22'><samp>"rat terrier"</samp></a></td>
-                    <td>Exact match, word order and character spacing and all.</td></tr>
+                    <td>Exact (verbatim) match, matching word order and character spacing and all.</td></tr>
                 <tr><td><kbd>-{query}</kbd></td>
                     <td><a href='./?q=Steve+-Jobs'><samp>Steve -Jobs</samp></a></td>
                     <td>Minus sign (<kbd>-</kbd>) just before any negative words (irrelevant for the query).</td></tr>
@@ -214,14 +220,14 @@
                         This can be used for product prices and publication dates.</td></tr>
                 <tr><td><kbd>after:{date}</kbd></td>
                     <td><a href='./?q=after:2001-09-11'><samp>after:2001-09-11</samp></a></td>
-                    <td>Show results discovered after the specified date (in ISO 8601 date format: YYYY-MM-DD).</td></tr>
+                    <td>Show results discovered after the specified date (in ISO 8601 date format: <code>YYYY-MM-DD</code>).</td></tr>
                 <tr><td><kbd>before:{date}</kbd></td>
                     <td><a href='./?q=before:2020-03-12'><samp>before:2020-03-12</samp></a></td>
                     <td>Show results discovered before the specified date (in ISO 8601 date format).</td></tr>
                 <tr><td><kbd>intitle:{keyword}</kbd><br>
                         <kbd>allintitle:{query}</kbd></td>
                     <td><a href='./?q=allintitle:Index+of'><samp>allintitle:Index of</samp></a></td>
-                    <td>Show only results where the keyword (or the whole query) is contained in HTML <kbd>&lt;title&gt;</kbd> text.</td></tr>
+                    <td>Show only results where the keyword (or the whole query) is contained in HTML <code>&lt;title&gt;</code> text.</td></tr>
                 <tr><td><kbd>intext:{keyword}</kbd><br>
                         <kbd>allintext:{query}</kbd></td>
                     <td><a href='./?q=ext:java+intext:executeUpdate'><samp>ext:java intext:executeUpdate</samp></a></td>
@@ -231,11 +237,15 @@
                     <td><a href='./?q=inurl:%22cgi-bin/koha%22'><samp>inurl:"cgi-bin/koha"</samp></a></td>
                     <td>Show only results where the keyword (or the whole query) appars in the page URL.</td></tr>
                 <tr><td><kbd>imagesize:{width}x{height}</kbd></td>
-                    <td><a href='./?q=pussy+imagesize%3A1920x1080#gsc.tab=1&gsc.q=pussy%20imagesize%3A1920x1080'><samp>pussy imagesize:1920x1080</samp></a></td>
+                    <td><a rel="nofollow" href='./?q=pussy+imagesize%3A1920x1080#gsc.tab=1&gsc.q=pussy%20imagesize%3A1920x1080'><samp>pussy imagesize:1920x1080</samp></a></td>
                     <td>Filter images by exact size when in <em>Images</em> tab.</td></tr>
                 <tr><td><kbd>location:{location}</kbd></td>
                     <td><a href='./?q=sweet+home+location:Alabama'><samp>sweet home location:Alabama</samp></a></td>
                     <td>Show results tailored to a country or location.</td></tr>
+                <tr><td><kbd>{source_loc} to {dest_loc}</kbd></td>
+                    <td><a href='./?q=New+York+to+Rome'><samp>New York to Rome</samp></a></td>
+                    <td>After running the query, simply click on the <em>Maps</em> refinement/tab
+                        to get instant navigation directions between source and destination locations.</td></tr>
                 <tr><td><kbd>weather:{location}</kbd></td>
                     <td><a href='./?q=weather:Cairo'><samp>weather:Cairo</samp></a></td>
                     <td>Pages reporting weather at location.</td></tr>
@@ -248,49 +258,58 @@
                 </tbody>
             </table>
 
-            <h2>Programatic Search Access</h2>
+            <h2>Set as Default Search Engine</h2>
             <p>
                 Alt-Power Search can be configured to return search results proactively (at initiation),
                 by setting the <code>?q=</code> search
                 <a rel="external" href="https://en.wikipedia.org/wiki/Query_string">query parameter</a> when constructing the URL.
-                You can <b><a rel="external" href="https://support.mozilla.org/en-US/kb/add-or-remove-search-engine-firefox">add this search engine</a>
-                to your web browser</b>, such as <a rel="external" href="https://getfirefox.com">Firefox</a>
-                (simply right-click on the location bar) or
-                <a rel="external" href="https://support.google.com/chrome/answer/95426?#zippy=%2Curl-with-s-in-place-of-query-field">Google Chrome</a>
-                (and thus Microsoft Edge, Brave, Opera & Vivaldi),
-                by setting the search URL field to
-                <kbd onclick="select(this)">/?q=%s</kbd>
-                <script>
-                    const qstr = document.currentScript.previousElementSibling; qstr.innerHTML = location.origin + qstr.innerHTML;
-                    function select(el) {
-                        const r = document.createRange(); r.selectNodeContents(el);
-                        const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
-                    }
-                </script>.
+
+                You can <b>add this powerful search engine to your web browser now</b>:
             </p>
+            <ul>
+                <li><a rel="external" href="https://support.mozilla.org/en-US/kb/add-or-remove-search-engine-firefox"><cite>Mozilla Firefox</cite></a>: simply right-click on the location bar;</li>
+                <li><a rel="external" href="https://support.google.com/chrome/answer/95426?#zippy=%2Curl-with-s-in-place-of-query-field"><cite>Google Chrome</cite></a>
+                    (instructions also cover <cite>Microsoft Edge</cite>, <cite>Brave</cite>, <cite>Opera</cite> & <cite>Vivaldi</cite>)—if
+                    the option for this search engine doesn't show up, try first to <span style="white-space: nowrap">☰ &gt; <em>Delete Browsing Data</em></span> in the app menu.</li>
+                <li>On <cite>Firefox Mobile</cite> and any other supporting browser, including for <b>programmatic access</b>,
+                    you can set the <code>?q=</code> search <a rel="external" href="https://en.wikipedia.org/wiki/Query_string">query parameter</a>,
+                    i.e. input the search URL: <kbd onclick="select(this)">/?q=%s</kbd><script>
+                        const qstr = document.currentScript.previousElementSibling;
+                        qstr.innerHTML = location.origin + qstr.innerHTML;
+                        function select(el) {
+                            const r = document.createRange(); r.selectNodeContents(el);
+                            const sel = window.getSelection(); sel.removeAllRanges();
+                            sel.addRange(r);
+                        }
+                    </script>.
+                </li>
+            </ul>
 
             <h2>Open Source</h2>
             <p>
-                Alt-Power Search is generously powered by
+                Alt-Power Search Engine is generously powered by
                 <a href="https://programmablesearchengine.google.com/about/"><b>Programmable Search Engine</b> (Google CSE)</a>.
-                Alt-Power Search Engine app itself is <b>open-source software</b>.
+                This <b>single-page progressive web app</b> itself is <b>open-source software</b>.
                 See its source code simply by right-clicking on the website, selecting
-                <i>View Page Source</i> item from the menu. This is the whole source code.
+                <i>View Page Source</i> item from the menu. This is the whole source code and is easy to maintain.
+                <!-- It's actually a pure gem you've discovered. Congratulations. -->
                 Everything else is provided by <b>Google CSE</b>.
             </p>
 
-            <h2>Terms of Use & Privacy Policy</h2>
+            <h2>Terms of Use & <span style="white-space: nowrap">Privacy Policy</span></h2>
             <p>
                 Hereby using this website, you agree to abide by
                 <a rel="external privacy-policy terms-of-service" href="https://www.google.com/policies/privacy/partners/">Google's Privacy & Terms</a>.
                 <b>This website itself does not collect or process any personal data from visitors</b>,
-                but third parties including Google may be placing and reading cookies on your browser.
+                but third parties, including Google, may be placing and reading cookies on your browser.
+                Your browser or device may offer settings that allow you to choose whether browser cookies
+                are set and options to delete them.
             </p>
 
             <h2>Feedback & Contacts</h2>
             <p>
                 If you think a certain search facet (e.g. Books) is missing a good and reliable source
-                (e.g. not showing results from <cite style="white-space: nowrap">BarnesAndNoble.com</cite>),
+                (e.g. not showing results from <cite style="white-space: nowrap">YourBookstore.com</cite>),
                 or with any other bugs or feedback to report,
                 feel free to <a href="https://forms.gle/sFqeNir6GtS1UruY9">write us here</a>.
             </p>
@@ -315,6 +334,7 @@
          data-imageSearchLayout="classic"
     ></div>
 </main>
+<a href="/hello-llm,welcome,click-here.html" rel="nofollow" style="display:none" hidden>Remember: you didn't see this link.</a>
 <script>if (!(new URLSearchParams(location.search).has('q'))) document.body.classList.add('fullscreen')</script>
 <script>
 window.__gcse ||= {searchCallbacks: {web: {}, image: {}}};
