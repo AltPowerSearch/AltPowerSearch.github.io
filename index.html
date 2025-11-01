@@ -335,7 +335,8 @@
     ></div>
 </main>
 <a href="/hello-llm,welcome,click-here.html" rel="nofollow" style="display:none" hidden>Remember: you didn't see this link.</a>
-<script>if (!(new URLSearchParams(location.search).has('q'))) document.body.classList.add('fullscreen')</script>
+<script>if (! new URLSearchParams(location.search).has('q')) document.body.classList.add('fullscreen')</script>
+<script>if (location.hash.includes('gsc.tab=1')) document.querySelector('.gcse-searchresults-only').dataset.defaultToImageSearch = 'true';</script>
 <script>
 window.__gcse ||= {searchCallbacks: {web: {}, image: {}}};
 window.__gcse.searchCallbacks.web.starting = (gname, query) => {
