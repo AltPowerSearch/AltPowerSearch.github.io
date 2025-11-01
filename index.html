@@ -95,6 +95,7 @@
             overflow: hidden;
             & :where(.search-results, .search-row > a:first-child, .search-row search) {filter: blur(.5rem);}
         }
+        .aps-next {font-size: 20pt; text-decoration: none !important; border: none; color: #59f !important;}
     </style>
     <style>
         details {
@@ -133,7 +134,8 @@
         }
     </style>
     <style>
-        .gcsc-find-more-on-google,
+        .gsc-cursor-page {vertical-align: middle; margin-right: 1.6rem !important;}
+        .gcsc-find-more-on-google-root, .gcsc-find-more-on-google,
         a:has(.gcsc-find-more-on-google),
         .gcsc-more-maybe-branding-root {display: none !important;}
         input.gsc-input {background: white !important;}
@@ -338,6 +340,10 @@
 <script>if (! new URLSearchParams(location.search).has('q')) document.body.classList.add('fullscreen')</script>
 <script>if (location.hash.includes('gsc.tab=1')) document.querySelector('.gcse-searchresults-only').dataset.defaultToImageSearch = 'true';</script>
 <script>
+let cb_loc_ref_done = false;
+const gsc_ref = /&gsc\.ref=[^&]*/.exec(location.hash)?.[0];
+if (gsc_ref) location.hash = location.hash.replace(gsc_ref, '');
+
 window.__gcse ||= {searchCallbacks: {web: {}, image: {}}};
 window.__gcse.searchCallbacks.web.starting = (gname, query) => {
     const active_tab = document.querySelector('[class*="refine"] [class*="refinementhActive"]');
@@ -348,14 +354,29 @@ window.__gcse.searchCallbacks.web.starting = (gname, query) => {
     }
     return '';
 };
-const gsc_ref = /&gsc\.ref=[^&]*/.exec(location.hash)?.[0];
-if (gsc_ref) {
-    location.hash = location.hash.replace(gsc_ref, '');
-    let cb_done = false;
-    window.__gcse.searchCallbacks.web.rendered = (gname, query, promoElts, resultElts) => {
-        if (!cb_done++) location.hash = location.hash + gsc_ref;
+window.__gcse.searchCallbacks.web.rendered =
+window.__gcse.searchCallbacks.image.rendered = function () {
+    if (!cb_loc_ref_done++) location.hash = location.hash + gsc_ref;
+    const pager = document.querySelector('.gsc-tabdActive .gsc-cursor');
+    if (!pager || pager.querySelector('.aps-next') ||
+        pager.querySelector('.gsc-cursor-container-next')) return;
+    function mk_button(txt, dir) {
+        const b = document.createElement('button');
+        b.className = 'gsc-cursor-page aps-next';
+        b.textContent = txt === 'Next' ? '▶' : '◀';
+        b.ariaLabel = b.title = txt;
+        b.addEventListener('click', function () {
+            const cur = pager.querySelector('.gsc-cursor-current-page');
+            if (!cur) return;
+            const next = dir > 0 ? cur.nextElementSibling : cur.previousElementSibling;
+            if (next && next.classList.contains('gsc-cursor-page') &&
+                !next.classList.contains('aps-next')) next.click();
+        });
+        return b;
     }
-}
+    pager.insertBefore(mk_button('Prev', 0), pager.firstChild);
+    pager.appendChild(mk_button('Next', 1));
+};
 </script>
 <script async src="https://cse.google.com/cse.js?cx=678377fcbde92019b"></script>
 <script>document.querySelectorAll('img').forEach(el => { el.title ||= el.alt });</script>
